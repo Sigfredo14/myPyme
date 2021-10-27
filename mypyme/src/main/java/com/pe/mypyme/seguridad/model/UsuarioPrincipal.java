@@ -16,12 +16,12 @@ import lombok.NoArgsConstructor;
 @Data  @AllArgsConstructor @NoArgsConstructor
 public class UsuarioPrincipal implements UserDetails  {	
 	
-	private String usuario;		
+	private String username;		
 	private String password;	
-	private boolean estado;
-	
+	private Boolean estado;	
 	private Collection<? extends GrantedAuthority> authorities;
 	
+
 	
 	public static UsuarioPrincipal build(Usuario usuario) {
 		List<GrantedAuthority> authorities = usuario.getRoles()
@@ -29,7 +29,7 @@ public class UsuarioPrincipal implements UserDetails  {
 				.map(rol -> new SimpleGrantedAuthority(rol.getRolNombre().name()))
 				.collect(Collectors.toList());		
 		
-		return new UsuarioPrincipal(usuario.getUsuario(),usuario.getPassword(),usuario.isEstado(),authorities);
+		return new UsuarioPrincipal(usuario.getUsername(),usuario.getPassword(),usuario.getEstado(),authorities);
 	}
 
 	
@@ -49,7 +49,7 @@ public class UsuarioPrincipal implements UserDetails  {
 	@Override
 	public String getUsername() {
 		// TODO Auto-generated method stub
-		return usuario;
+		return username;
 	}
 
 	@Override
@@ -75,6 +75,5 @@ public class UsuarioPrincipal implements UserDetails  {
 		// TODO Auto-generated method stub
 		return estado;
 	}
-	
 
 }

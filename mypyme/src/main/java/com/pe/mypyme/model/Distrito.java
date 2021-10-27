@@ -28,7 +28,7 @@ public class Distrito {
 	private int id_distrito;
 	
 	@Column(name="v_descripcion")
-	@NotNull(message = "no puede estar vacío.")	
+	@NotNull(message = "campo descripcion no puede ser nulo")
 	@Size(min = 2, max = 70, message = "Descripcion tiene que ser entre 2 y 70 caracteres.")
 	private String descripcion;
 	

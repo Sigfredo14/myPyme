@@ -74,7 +74,7 @@ public class AuthController {
 		
 		Authentication auth = authManager
 				.authenticate(
-						new UsernamePasswordAuthenticationToken(loginUsuario.getUsuario(), loginUsuario.getPassword()));
+						new UsernamePasswordAuthenticationToken(loginUsuario.getUsername(), loginUsuario.getPassword()));
 		
 		SecurityContextHolder.getContext().setAuthentication(auth);
 		
@@ -98,7 +98,7 @@ public class AuthController {
 		if(result.hasErrors()) {
 			List<String> errors = result.getFieldErrors()
 					.stream()
-					.map(err -> "El campo '" + err.getField() + "' " + err.getDefaultMessage())
+					.map(err -> "El campo estoy aki '" + err.getField() + "' " + err.getDefaultMessage())
 					.collect(Collectors.toList());
 			
 			response.put("errors", errors);
@@ -107,15 +107,16 @@ public class AuthController {
 		}
 		
 		
-		if(usuarioService.existsByUsuario(nuevoUsuario.getUsuario())) {
+		if(usuarioService.existsByUsername(nuevoUsuario.getUsername())) {
 			response.put("mensaje", "El usuario ya existe");
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
 
 		}		
 
-		Usuario usuario = new Usuario(nuevoUsuario.getUsuario(),nuevoUsuario.getNombres_apellidos(),nuevoUsuario.isEstado(),passwordEnconder.encode(nuevoUsuario.getPassword()));
+		Usuario usuario = new Usuario(nuevoUsuario.getUsername(),passwordEnconder.encode(nuevoUsuario.getPassword()),nuevoUsuario.getEstado(),nuevoUsuario.getNombresApellidos());
 
 		Set<Rol> roles = new HashSet<>();
+		
 		if(nuevoUsuario.getRoles().contains("ROLE_ADMIN")){
 			roles.add(rolService.findByRolNombre(RolNombre.ROLE_ADMIN).get());
 		}

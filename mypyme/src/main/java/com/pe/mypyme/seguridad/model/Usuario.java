@@ -32,25 +32,24 @@ public class Usuario implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)	
 	private Integer id_usuario;	
 	
-	@NotEmpty	
+	@NotNull
 	@Column(name = "v_usuario", unique = true)		
-	@Size(min = 5, max = 15, message = "Usuario Tiene que ser entre 5 y 15 caracteres.")
-	private String usuario;	
+	@Size(min = 3, max = 15, message = "Usuario Tiene que ser entre 3 y 10 caracteres.")
+	private String username;
 	
-	@Column(name = "v_nombres_apellidos")
-	@NotNull(message = "campo no debe ser nullo")
-	@Size(min = 2, max = 50, message = "Nombres Tiene que ser entre 2 y 50 caracteres.")
-	private String nombres_apellidos;
+
+	@NotNull
+	@Column(name = "v_contrasenia")		
+	private String password;
 	
 	
 	@Column(name = "v_estado")		
-	private boolean estado;
+	private Boolean estado;
 	
-	
-	@Column(name = "v_contrasenia")
-	@NotNull(message = "campo no debe ser nullo")
-	@Size(min = 6, max = 15, message = "Contraseña Tiene que ser entre 6 y 15 caracteres.")
-	private String password;	
+	@NotNull
+	@Column(name = "v_nombres_apellidos")	
+	@Size(min = 2, max = 50, message = "Nombres Tiene que ser entre 2 y 50 caracteres.")
+	private String nombresApellidos;		
 	
 	
 	@ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
@@ -59,18 +58,20 @@ public class Usuario implements Serializable{
 	private Set<Rol> roles = new HashSet<>();
 
 
-	public Usuario(
-			@NotEmpty @Size(min = 5, max = 15, message = "Usuario Tiene que ser entre 5 y 15 caracteres.") String usuario,
-			@NotNull(message = "campo no debe ser nullo") @Size(min = 2, max = 50, message = "Nombres Tiene que ser entre 2 y 50 caracteres.") String nombres_apellidos,
-			boolean estado,
-			@NotNull(message = "campo no debe ser nullo") @Size(min = 6, max = 15, message = "Contraseña Tiene que ser entre 6 y 15 caracteres.") String password) {
+	public Usuario(@NotEmpty String username, @NotEmpty String password, Boolean estado,
+			@NotEmpty String nombresApellidos) {
 		super();
-		this.usuario = usuario;
-		this.nombres_apellidos = nombres_apellidos;
-		this.estado = estado;
+		this.username = username;
 		this.password = password;
+		this.estado = estado;
+		this.nombresApellidos = nombresApellidos;
 	}
-	
+
+
+
+
+
+
 	
 	
 	/*

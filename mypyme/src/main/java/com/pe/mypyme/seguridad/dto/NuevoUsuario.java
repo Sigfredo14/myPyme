@@ -2,36 +2,35 @@ package com.pe.mypyme.seguridad.dto;
 
 import java.util.HashSet;
 import java.util.Set;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
-import com.pe.mypyme.seguridad.model.Rol;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
-@Data @AllArgsConstructor
+import lombok.NoArgsConstructor;
+@Data @AllArgsConstructor @NoArgsConstructor
 public class NuevoUsuario {
 
 	@NotBlank
-	private String usuario;	
+	private String username;	
 
 	@NotBlank
-	private String password;	
+	private String password;
+	
+	
+	private Boolean estado;		
 
 	@NotBlank
-	private String nombres_apellidos;	
+	private String nombresApellidos;		
 	
-	@NotBlank
-	private boolean estado;		
+
+	private Set<String> roles = new HashSet<String>();
 	
-	@NotBlank
-	private Set<Rol> roles = new HashSet<>();
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

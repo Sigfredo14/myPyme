@@ -1,0 +1,28 @@
+
+ SELECT * FROM t_rol
+ insert into t_rol(v_descripcion) values('ROLE_ADMIN');
+ insert into t_rol(v_descripcion) values('ROLE_USER');
+
+*********************************************************************
+@POST        localhost:8383/auth/nuevo/
+
+
+{
+"username":"yulissa",
+"password":"yulissa",
+"estado": true,
+"nombresApellidos":"yuli jimenez",
+"roles":["ADMIN"]
+}
+
+
+@POST        localhost:8383/auth/login/
+
+{
+"username":"yulissa",
+"password":"yulissa"
+}
+
+*************************************************************************
+
+

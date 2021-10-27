@@ -30,7 +30,7 @@ public class Departamento {
 	private int id_departamento;
 	
 	@Column(name = "v_departamento")
-	@NotNull(message = "no puede estar vacío.")	
+	@NotNull(message = "campo descripcion no puede ser nulo")	
 	@Size(min = 2, max = 70, message = "descripcion tiene que ser entre 2 y 70 caracteres.")
 	private String descripcion;
 	

@@ -8,22 +8,9 @@ import org.springframework.stereotype.Service;
 import com.pe.mypyme.seguridad.model.Usuario;
 import com.pe.mypyme.seguridad.repo.UsuarioRepository;
 @Service
-public class UsuarioServiceImpl implements UsuarioService {
-	
+public class UsuarioServiceImpl implements UsuarioService {	
 	@Autowired
 	private UsuarioRepository usuarioRepo;
-
-	@Override
-	public Optional<Usuario> findByUsuario(String username) {
-		// TODO Auto-generated method stub
-		return usuarioRepo.findByUsuario(username);
-	}
-
-	@Override
-	public Boolean existsByUsuario(String username) {
-		// TODO Auto-generated method stub
-		return usuarioRepo.existsByUsuario(username);
-	}
 
 	@Override
 	public Usuario save(Usuario usuario) {
@@ -41,6 +28,18 @@ public class UsuarioServiceImpl implements UsuarioService {
 	public void delete(Integer id) {
 		usuarioRepo.deleteById(id);
 		
+	}
+
+	@Override
+	public Optional<Usuario> findByUsername(String username) {
+		// TODO Auto-generated method stub
+		return usuarioRepo.findByUsername(username);
+	}
+
+	@Override
+	public Boolean existsByUsername(String username) {
+		// TODO Auto-generated method stub
+		return usuarioRepo.existsByUsername(username);
 	}
 
 	
