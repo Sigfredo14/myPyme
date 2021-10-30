@@ -1,5 +1,6 @@
 package com.pe.mypyme.seguridad.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,11 @@ public class RolServiceImpl implements RolService {
 	@Override
 	public void save(Rol rol) {
 		rolRepository.save(rol);
+	}
+
+	@Override
+	public List<Rol> listRol() {		
+		return rolRepository.findAll();
 	}
 
 }

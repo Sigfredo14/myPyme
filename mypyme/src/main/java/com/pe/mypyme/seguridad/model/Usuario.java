@@ -49,7 +49,12 @@ public class Usuario implements Serializable{
 	@NotNull
 	@Column(name = "v_nombres_apellidos")	
 	@Size(min = 2, max = 50, message = "Nombres Tiene que ser entre 2 y 50 caracteres.")
-	private String nombresApellidos;		
+	private String nombresApellidos;
+	
+	
+	@NotNull
+	@Column(name = "v_correo")	
+	private String correo;
 	
 	
 	@ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
@@ -58,14 +63,21 @@ public class Usuario implements Serializable{
 	private Set<Rol> roles = new HashSet<>();
 
 
-	public Usuario(@NotEmpty String username, @NotEmpty String password, Boolean estado,
-			@NotEmpty String nombresApellidos) {
+	public Usuario(
+			@NotNull @Size(min = 3, max = 15, message = "Usuario Tiene que ser entre 3 y 10 caracteres.") String username,
+			@NotNull String password, Boolean estado,
+			@NotNull @Size(min = 2, max = 50, message = "Nombres Tiene que ser entre 2 y 50 caracteres.") String nombresApellidos,
+			@NotNull String correo) {
 		super();
 		this.username = username;
 		this.password = password;
 		this.estado = estado;
 		this.nombresApellidos = nombresApellidos;
+		this.correo = correo;
 	}
+
+
+	
 
 
 

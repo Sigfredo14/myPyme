@@ -19,7 +19,10 @@ public class NuevoUsuario {
 	private Boolean estado;		
 
 	@NotBlank
-	private String nombresApellidos;		
+	private String nombresApellidos;
+	
+	@NotBlank
+	private String correo;
 	
 
 	private Set<String> roles = new HashSet<String>();

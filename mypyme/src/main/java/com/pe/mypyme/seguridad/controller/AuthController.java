@@ -1,5 +1,6 @@
 package com.pe.mypyme.seguridad.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -19,6 +20,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -114,17 +116,16 @@ public class AuthController {
 
 		}		
 
-		Usuario usuario = new Usuario(nuevoUsuario.getUsername(),passwordEnconder.encode(nuevoUsuario.getPassword()),nuevoUsuario.getEstado(),nuevoUsuario.getNombresApellidos());
+		Usuario usuario = new Usuario(nuevoUsuario.getUsername(),passwordEnconder.encode(nuevoUsuario.getPassword()),true,nuevoUsuario.getNombresApellidos(), nuevoUsuario.getCorreo());
 
 		Set<Rol> roles = new HashSet<>();
-		
+		roles.add(rolService.findByRolNombre(RolNombre.ROLE_USER).get());	
+        
+        
 		if(nuevoUsuario.getRoles().contains("ROLE_ADMIN")){
 			roles.add(rolService.findByRolNombre(RolNombre.ROLE_ADMIN).get());
 		}
-
-		if(nuevoUsuario.getRoles().contains("ROLE_USER")){
-			roles.add(rolService.findByRolNombre(RolNombre.ROLE_USER).get());
-		}			
+		
 		
 		usuario.setRoles(roles);
 		
@@ -136,4 +137,21 @@ public class AuthController {
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 		
 	}
+	
+	@GetMapping("/listarRoles")
+	public ResponseEntity<?>listaRoles(){		
+		List<Rol> listaRoles = rolService.listRol();
+		
+		return new ResponseEntity<>(listaRoles,HttpStatus.OK);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
