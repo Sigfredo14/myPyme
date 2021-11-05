@@ -12,9 +12,9 @@
 "password":"yulissa",
 "estado": true,
 "nombresApellidos":"yuli jimenez",
+"correo":"yuli@gmail.com",
 "roles":["ADMIN"]
 }
-
 
 @POST        localhost:8383/auth/login/
 

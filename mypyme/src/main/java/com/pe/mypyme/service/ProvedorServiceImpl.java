@@ -53,6 +53,18 @@ public class ProvedorServiceImpl implements ProvedorService{
 		return provedorRepository.findAll(pageable);
 	}
 
+	@Override
+	public Boolean existsByRazonSocial(String username) {
+		// TODO Auto-generated method stub
+		return  provedorRepository.existsByRazonSocial(username);
+	}
+
+	@Override
+	public Boolean existsByCorreo(String correo) {
+		// TODO Auto-generated method stub
+		return provedorRepository.existsByCorreo(correo);
+	}
+
 
 	
 

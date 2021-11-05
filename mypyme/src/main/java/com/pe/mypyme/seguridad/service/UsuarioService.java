@@ -8,6 +8,7 @@ public interface UsuarioService {
 	Optional<Usuario> findByUsername(String username);
 	Boolean existsByUsername(String username);
 	
+	
 	Usuario save(Usuario usuario);
 	Usuario findById(Integer id);
 	void delete(Integer id);

@@ -8,4 +8,6 @@ import com.pe.mypyme.model.Provedor;
 
 public interface ProvedorService extends ICRUD<Provedor>{
 	public Page<Provedor> findAll(Pageable pageable);
+	Boolean existsByRazonSocial(String username);
+	Boolean existsByCorreo(String correo);
 }

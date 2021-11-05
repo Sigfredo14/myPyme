@@ -17,6 +17,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -79,15 +80,15 @@ public class AuthController {
 				.authenticate(
 						new UsernamePasswordAuthenticationToken(loginUsuario.getUsername(), loginUsuario.getPassword()));
 		
-		SecurityContextHolder.getContext().setAuthentication(auth);
+		SecurityContextHolder.getContext().setAuthentication(auth);		
+		String jwt = jwtProvider.generatToken(auth);		
+		UserDetails userDetails = (UserDetails)auth.getPrincipal();
+        JwtDto jwtDto = new JwtDto(jwt, userDetails.getUsername(), userDetails.getAuthorities());      
 		
-		String jwt = jwtProvider.generatToken(auth);
-		
-		JwtDto jwtDto = new JwtDto(jwt);
 		
 		response.put("mensaje", "Login exitoso");
 		response.put("jwtDto", jwtDto);
-		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	
 	
@@ -124,8 +125,7 @@ public class AuthController {
         
 		if(nuevoUsuario.getRoles().contains("ROLE_ADMIN")){
 			roles.add(rolService.findByRolNombre(RolNombre.ROLE_ADMIN).get());
-		}
-		
+		}	
 		
 		usuario.setRoles(roles);
 		
@@ -137,21 +137,6 @@ public class AuthController {
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 		
 	}
-	
-	@GetMapping("/listarRoles")
-	public ResponseEntity<?>listaRoles(){		
-		List<Rol> listaRoles = rolService.listRol();
-		
-		return new ResponseEntity<>(listaRoles,HttpStatus.OK);
-	}
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 }

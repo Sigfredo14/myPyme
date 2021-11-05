@@ -38,8 +38,9 @@ public class JwtProvider {
 	@Value("${jwt.expiration}")
 	private int expiration;	
 	
-	
-	public String generatToken(Authentication auth) {
+  
+    
+	public String generatToken(Authentication auth) {		
 			
 			UsuarioPrincipal usuarioPrincipal = (UsuarioPrincipal) auth.getPrincipal();
 			List<String> roles = usuarioPrincipal.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()); 
@@ -48,13 +49,10 @@ public class JwtProvider {
 			return Jwts.builder().setSubject(usuarioPrincipal.getUsername())
 								 .claim("roles", roles)
 								 .setIssuedAt(new Date())
-								 .setExpiration(new Date(new Date().getTime() + expiration))
+								 .setExpiration(new Date(new Date().getTime() + expiration * 1000))
 								 .signWith(SignatureAlgorithm.HS512, secret.getBytes())
 								 .compact();
-		}
-	
-	
-	
+		}	
 	
 	
 	public String getUsernameFromToken(String token) {
@@ -63,10 +61,7 @@ public class JwtProvider {
 	
 	
 	
-	
-	
-	public Boolean validateToken(String token) {
-		
+	public Boolean validateToken(String token) {		
 		try {
 			Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(token);
 			return true;
@@ -85,11 +80,10 @@ public class JwtProvider {
 		return false;
 	}
 	
+    
 	
 	
-	
-	public String refreshToken(JwtDto jwtDto) throws ParseException {
-		
+	public String refreshToken(JwtDto jwtDto) throws ParseException {		
 		JWT jwt = JWTParser.parse(jwtDto.getToken());
 		JWTClaimsSet claims = jwt.getJWTClaimsSet();
 		String username = claims.getSubject();
@@ -98,9 +92,8 @@ public class JwtProvider {
 		return Jwts.builder().setSubject(username)
 				 .claim("roles", roles)
 				 .setIssuedAt(new Date())
-				 .setExpiration(new Date(new Date().getTime() + expiration))
+				 .setExpiration(new Date(new Date().getTime() + expiration * 1000))
 				 .signWith(SignatureAlgorithm.HS512, secret.getBytes())
 				 .compact();
 	}
-
 }
